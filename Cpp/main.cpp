@@ -35,11 +35,11 @@ int main() {
 
     std::ofstream file{};
     file.open("result.txt");
-    file << sum;
+    file << sum << std::endl;
     file.close();
 
     const auto end = std::chrono::system_clock::now();
-    std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms";
+    std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms" << std::endl;
 
     return 0;
 }
