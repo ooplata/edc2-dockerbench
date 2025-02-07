@@ -20,27 +20,21 @@ function sumaPrimerosPrimos(n) {
         }
         numero++;
     }
-    //console.log(suma)
-
     return suma;
 }
 
 function medirTiempoEjecucion(func) {
-    return async function(...args) {
+    return function (...args) {
         const inicio = process.hrtime.bigint();
-        await func(...args);
+        const resultado = func(...args);
         const fin = process.hrtime.bigint();
-        const tiempoEjecucion = Number(fin - inicio) / 1000000; // Convertir nanosegundos a milisegundos
-        console.log(`Tiempo de ejecución: ${tiempoEjecucion} ms`);
-        return tiempoEjecucion;
+        const tiempoEjecucion = Number(fin - inicio) / 1000000; // Convertir a milisegundos
+        console.log(tiempoEjecucion); // Solo imprime el tiempo en ms
+        return resultado;
     };
 }
 
-// Envuelve sumaPrimerosPrimos en una función para pasarla a medirTiempoEjecucion
-const tiempoTarea = medirTiempoEjecucion(() => sumaPrimerosPrimos(10000));
+// Medir el tiempo de la función correctamente
+const tiempoTarea = medirTiempoEjecucion(sumaPrimerosPrimos);
+tiempoTarea(10000);
 
-async function ejecutar() {
-    await tiempoTarea();
-}
-
-ejecutar();

@@ -1,4 +1,4 @@
-FROM node:16-alphine
+FROM node:16
 
 WORKDIR /app
 
