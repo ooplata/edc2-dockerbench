@@ -34,7 +34,7 @@ int main() {
     constexpr auto sum = SumPrimes<Max>();
 
     std::ofstream file{};
-    file.open("result.txt");
+    file.open("out.txt");
     file << sum << std::endl;
     file.close();
 

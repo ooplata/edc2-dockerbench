@@ -65,7 +65,7 @@ func main() {
 	tiempo := medirTiempoEjecucion(sumaPrimerosPrimos, n)
 
 	// Crear o abrir el archivo output.txt para escribir
-	file, err := os.Create("output.txt")
+	file, err := os.Create("out.txt")
 	if err != nil {
 		fmt.Println("Error al crear el archivo:", err)
 		return
