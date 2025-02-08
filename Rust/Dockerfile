@@ -5,6 +5,6 @@ COPY . .
 RUN cargo build --release
 
 FROM scratch
-COPY --from=build /app/target/release/* .
+COPY --from=build /app/target/release ./
 
 CMD ["./Rust"]
