@@ -4,7 +4,7 @@ WORKDIR /app
 COPY . .
 RUN cargo build --release
 
-FROM scratch
-COPY --from=build /app/target/release ./
+FROM debian:stable-slim
+COPY --from=build /app/target/release/ /app/
 
-CMD ["./Rust"]
+CMD ["./app/Rust"]
