@@ -12,18 +12,17 @@ static constexpr bool IsPrime(std::uintmax_t n) {
     return true;
 }
 
-template<std::size_t N>
-static constexpr std::uintmax_t SumPrimes() {
-    std::size_t count = 0;
-    std::uintmax_t i = 2;
-    std::uintmax_t sum = 0;
+static constexpr std::uintmax_t SumPrimes(std::size_t until) {
+    std::size_t count = 1;
+    std::uintmax_t i = 3;
+    std::uintmax_t sum = 2;
 
-    while (count < N) {
+    while (count < until) {
         if (IsPrime(i)) {
             sum += i;
             count += 1;
         }
-        i++;
+        i += 2;
     }
     return sum;
 }
@@ -31,7 +30,7 @@ static constexpr std::uintmax_t SumPrimes() {
 int main() {
     const auto start = std::chrono::system_clock::now();
     constexpr std::size_t Max = 10000;
-    constexpr auto sum = SumPrimes<Max>();
+    constexpr auto sum = SumPrimes(Max);
 
     std::ofstream file{};
     file.open("out.txt");
