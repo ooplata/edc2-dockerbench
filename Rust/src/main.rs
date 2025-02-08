@@ -1,25 +1,37 @@
 use std::fs::File;
 use std::io::prelude::*;
 
-fn is_prime(n: u64) -> bool {
-    if n < 2 {
+const fn is_prime(n: u64) -> bool {
+    if n <= 1 {
         return false;
     }
 
-    let mut i = 2;
+    if n == 2 || n == 3 {
+        return true;
+    }
+
+    if n % 2 == 0 || n % 3 == 0 {
+        return false;
+    }
+
+    if (n - 1) % 6 != 0 && (n + 1) % 6 != 0 {
+        return false;
+    }
+
+    let mut i: u64 = 5;
     loop {
-        if n == i {
+        if i * i > n {
             return true;
         }
 
-        if n % i == 0 {
+        if n % i == 0 || n % (i + 2) == 0 {
             return false;
         }
-        i += 1;
+        i += 6;
     }
 }
 
-fn sum_primes(until: u64) -> u64 {
+const fn sum_primes(until: u64) -> u64 {
     let mut count: u64 = 1;
     let mut i: u64 = 3;
     let mut sum = 2;
@@ -39,10 +51,10 @@ fn main() -> std::io::Result<()> {
     let now = Instant::now();
 
     const MAX: u64 = 10000;
-    let primes: u64 = sum_primes(MAX);
+    const PRIMES: u64 = sum_primes(MAX);
 
     let mut file = File::create("out.txt")?;
-    file.write_all(primes.to_string().as_bytes())?;
+    file.write_all(PRIMES.to_string().as_bytes())?;
 
     let elapsed = now.elapsed();
     println!("{}ms", elapsed.as_millis());

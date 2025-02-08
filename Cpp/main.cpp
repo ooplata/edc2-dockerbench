@@ -1,13 +1,29 @@
-#include <array>
 #include <chrono>
 #include <cstdint>
 #include <fstream>
 #include <iostream>
 
 static constexpr bool IsPrime(std::uintmax_t n) {
-    for (std::uintmax_t i = 2; i * i <= n; i++) {
-        if (n % i == 0)
+    if (n <= 1) {
+        return false;
+    }
+
+    if (n == 2 || n == 3) {
+        return true;
+    }
+
+    if (n % 2 == 0 || n % 3 == 0) {
+        return false;
+    }
+
+    if ((n - 1) % 6 != 0 && (n + 1) % 6 != 0) {
+        return false;
+    }
+
+    for (std::uintmax_t i = 5; i * i <= n; i += 6) {
+        if (n % i == 0 || n % (i + 2) == 0) {
             return false;
+        }
     }
     return true;
 }
@@ -30,7 +46,7 @@ static constexpr std::uintmax_t SumPrimes(std::size_t until) {
 int main() {
     const auto start = std::chrono::system_clock::now();
     constexpr std::size_t Max = 10000;
-    constexpr auto sum = SumPrimes(Max);
+    constexpr std::uintmax_t sum = SumPrimes(Max);
 
     std::ofstream file{};
     file.open("out.txt");
