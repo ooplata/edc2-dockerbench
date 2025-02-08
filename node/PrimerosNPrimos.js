@@ -9,16 +9,16 @@ function esPrimo(num) {
 }
 
 function sumaPrimerosPrimos(n) {
-    let suma = 0;
-    let contador = 0;
-    let numero = 2;
+    let suma = 2;
+    let contador = 1;
+    let numero = 3;
 
     while (contador < n) {
         if (esPrimo(numero)) {
             suma += numero;
             contador++;
         }
-        numero++;
+        numero += 2;
     }
     return suma;
 }
@@ -29,7 +29,7 @@ function medirTiempoEjecucion(func) {
         const resultado = func(...args);
         const fin = process.hrtime.bigint();
         const tiempoEjecucion = Number(fin - inicio) / 1000000; // Convertir a milisegundos
-        console.log(tiempoEjecucion); // Solo imprime el tiempo en ms
+        console.log(`${tiempoEjecucion}ms`); // Imprime el tiempo en ms
         return resultado;
     };
 }
@@ -37,4 +37,3 @@ function medirTiempoEjecucion(func) {
 // Medir el tiempo de la función correctamente
 const tiempoTarea = medirTiempoEjecucion(sumaPrimerosPrimos);
 tiempoTarea(10000);
-
