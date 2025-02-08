@@ -27,23 +27,42 @@ func esPrimo(num int) bool {
 
 // Función para calcular la suma de los primeros 'n' números primos
 func sumaPrimerosPrimos(n int) int {
-	suma := 0
-	contador := 0
-	numero := 2
+	suma := 2
+	contador := 1
+	numero := 3
 
 	for contador < n {
 		if esPrimo(numero) {
 			suma += numero
 			contador++
 		}
-		numero++
+		numero += 2
 	}
 
 	return suma
 }
 
+func escribirPrimerosPrimos(n int) {
+	primos := sumaPrimerosPrimos(n)
+
+	// Crear o abrir el archivo out.txt para escribir
+	file, err := os.Create("out.txt")
+	if err != nil {
+		fmt.Println("Error al crear el archivo:", err)
+		return
+	}
+	defer file.Close()
+
+	// Escribir la suma en un archivo
+	_, err = fmt.Fprintf(file, "%d\n", primos)
+	if err != nil {
+		fmt.Println("Error al escribir en el archivo:", err)
+		return
+	}
+}
+
 // Función para medir el tiempo de ejecución
-func medirTiempoEjecucion(f func(int) int, n int) float64 {
+func medirTiempoEjecucion(f func(int), n int) float64 {
 	// Registra el inicio del tiempo
 	inicio := time.Now()
 
@@ -62,23 +81,8 @@ func main() {
 	n := 10000
 
 	// Medir el tiempo que tarda en calcular los primeros 'n' primos
-	tiempo := medirTiempoEjecucion(sumaPrimerosPrimos, n)
-
-	// Crear o abrir el archivo output.txt para escribir
-	file, err := os.Create("out.txt")
-	if err != nil {
-		fmt.Println("Error al crear el archivo:", err)
-		return
-	}
-	defer file.Close()
-
-	// Escribir el tiempo de ejecución en el archivo
-	_, err = fmt.Fprintf(file, "%.2f \n", tiempo)
-	if err != nil {
-		fmt.Println("Error al escribir en el archivo:", err)
-		return
-	}
+	tiempo := medirTiempoEjecucion(escribirPrimerosPrimos, n)
 
 	// También imprimir en la consola
-	fmt.Printf("%.2f \n", tiempo)
+	fmt.Printf("%.2fms\n", tiempo)
 }
