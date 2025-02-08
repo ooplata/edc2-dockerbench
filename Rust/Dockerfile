@@ -1,9 +1,10 @@
-FROM rust:1
+FROM rust:1 AS build
 
 WORKDIR /app
-COPY Cargo.toml .
-
+COPY . .
 RUN cargo build --release
-COPY target/release/* .
+
+FROM scratch
+COPY --from=build /app/target/release/* .
 
 CMD ["./Rust"]
