@@ -34,7 +34,7 @@ const fn is_prime(n: u64) -> bool {
 const fn sum_primes(until: u64) -> u64 {
     let mut count: u64 = 1;
     let mut i: u64 = 3;
-    let mut sum = 2;
+    let mut sum: u64 = 2;
 
     while count < until {
         if is_prime(i) {
