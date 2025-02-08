@@ -1,3 +1,5 @@
+const fs = require("node:fs");
+
 function esPrimo(num) {
     if (num <= 1) return false;
     if (num <= 3) return true;
@@ -23,17 +25,22 @@ function sumaPrimerosPrimos(n) {
     return suma;
 }
 
+function escribirPrimerosPrimos(n) {
+    const primos = sumaPrimerosPrimos(n);
+    fs.writeFileSync("out.txt", primos.toString());
+}
+
 function medirTiempoEjecucion(func) {
     return function (...args) {
         const inicio = process.hrtime.bigint();
-        const resultado = func(...args);
+        func(...args);
         const fin = process.hrtime.bigint();
-        const tiempoEjecucion = Number(fin - inicio) / 1000000; // Convertir a milisegundos
-        console.log(`${tiempoEjecucion}ms`); // Imprime el tiempo en ms
-        return resultado;
+
+        return Number(fin - inicio) / 1000000; // Convertir a milisegundos
     };
 }
 
 // Medir el tiempo de la función correctamente
-const tiempoTarea = medirTiempoEjecucion(sumaPrimerosPrimos);
-tiempoTarea(10000);
+const tiempoTarea = medirTiempoEjecucion(escribirPrimerosPrimos);
+const tiempoEjecucion = tiempoTarea(10000);
+console.log(`${tiempoEjecucion}ms`); // Imprime el tiempo en ms
